@@ -7,8 +7,7 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
     userEmail: {
-        fontWeight:600,
-        fontSize:15,
+        fontSize: 15,
     },
     button: {
         backgroundColor: 'orange',

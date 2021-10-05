@@ -1,6 +1,5 @@
 import firebase from "firebase/app";
-
-require('firebase/auth')
+import 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: "AIzaSyC2B-avtPIwMS5efEqmvGBf5dw5rC6vMKU",
@@ -12,12 +11,11 @@ const firebaseConfig = {
 };
 
 let application;
-if (firebase.apps.length === 0) {
+
+if (!firebase.apps.length) {
     application = firebase.initializeApp(firebaseConfig);
 } else {
-    application = firebase.app()
+    application = firebase.app();
 }
 
-const authorization = firebase.auth()
-
-export {authorization};
+export const authorization = firebase.auth();

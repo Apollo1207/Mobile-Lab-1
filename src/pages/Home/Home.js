@@ -1,17 +1,15 @@
 import React from 'react';
-import {authorization} from '../../firebase';
-import {useNavigation} from '@react-navigation/native';
+import {authorization} from "../../../firebase";
 import {Text, TouchableOpacity, View} from 'react-native';
-import styles from './HomePageStyles';
+import styles from './styles';
 
-function HomePage() {
-    const navigation = useNavigation()
+function Home({navigation}) {
 
     const handleSignOut = () => {
         authorization
             .signOut()
             .then(() => {
-                navigation.replace("LoginPage")
+                navigation.navigate("Login")
             })
             .catch(error => alert(error.message))
     }
@@ -20,8 +18,7 @@ function HomePage() {
             <Text style={styles.userEmail}>Your email: {authorization.currentUser?.email}</Text>
             <TouchableOpacity
                 onPress={handleSignOut}
-                style={styles.button}
-            >
+                style={styles.button}>
                 <Text style={styles.buttonTitle}>Sign out</Text>
             </TouchableOpacity>
         </View>
@@ -29,6 +26,6 @@ function HomePage() {
 }
 
 
-export default HomePage
+export default Home
 
 

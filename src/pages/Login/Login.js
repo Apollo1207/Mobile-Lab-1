@@ -1,19 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {authorization} from '../../firebase';
-import {useNavigation} from '@react-navigation/native';
-import {KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import styles from './LoginPageStyles';
+import {authorization} from "../../../firebase";
+import {Platform, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView} from 'react-native';
+import styles from './styles';
 
-function LoginPage() {
+const keyboardAvoidingBehavior = Platform.OS === 'ios' ? 'padding' : 'height';
+
+function Login({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const navigation = useNavigation();
 
     useEffect(() => {
         authorization.onAuthStateChanged(user => {
             if (user) {
-                navigation.replace("HomePage")
+                navigation.navigate("Home")
             }
         })
     }, [])
@@ -21,27 +20,21 @@ function LoginPage() {
     const handlerSignUp = () => {
         authorization
             .createUserWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log('SignUp with:', user.email);
-            })
             .catch(error => alert(error.message))
+
     }
 
     const handlerSignIn = () => {
         authorization
             .signInWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log('SignIn with:', user.email);
-            })
             .catch(error => alert(error.message))
+
     }
 
     return (
         <KeyboardAvoidingView
             style={styles.container}
-            behavior="padding">
+            behavior={keyboardAvoidingBehavior}>
 
             <View style={styles.inputWrapper}>
                 <TextInput
@@ -75,5 +68,5 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default Login;
 
